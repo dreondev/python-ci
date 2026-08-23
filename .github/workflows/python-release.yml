@@ -28,7 +28,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Bump version and update changelog
-        run: uv run cz bump --yes --changelog
+        id: bump
+        run: |
+          uv run cz bump --yes --changelog || [ $? -eq 21 ]
 
       - name: Push commit and tag
         run: git push --follow-tags
